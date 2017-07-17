@@ -1,6 +1,6 @@
 const { Collection } = require('discord.js');
-const newChar = require(`${__dirname}/../../functions/createCharacter.js`);
-const newEnem = require(`${__dirname}/../../functions/createEnemy.js`);
+const Hero = require(`${__dirname}/../../struct/Hero.js`);
+const Enemy = require(`${__dirname}/../../struct/Enemy.js`);
 const game = require(`${__dirname}/../../functions/game.js`);
 
 // Fisher-Yates Shuffle, I take no credit for it.
@@ -49,7 +49,7 @@ exports.run = (message, args, suffix, client, perms) => {
 	userTeam.forEach(u => {
 		message.channel.awaitMessages(m => m.author.id === u.id && client.heroes.keyArray().map(h => h.toLowerCase()).includes(m.content.toLowerCase()), { max: 1, time: 30000, errors: ['time']}).then(col => {
 			let uHero = col.first().content.charAt(0).toUpperCase() + col.first().content.slice(1);
-			team.set(u.id, newChar(client, u.id, uHero, turnArr[curSize])); 
+			team.set(u.id, new Hero(client, u.id, uHero, turnArr[curSize])); 
 			message.channel.send(`:white_check_mark: | Your hero has been set to ${uHero}`);
 			curSize++;
 		}).catch(c => timeUp = true);
@@ -64,7 +64,7 @@ exports.run = (message, args, suffix, client, perms) => {
 		message.channel.game = {
 			playing: true,
 			team: team,
-			enemy: newEnem(client, args[0]),
+			enemy: new Enemy(client, args[0]),
 			turn: 1,
 			order: turnArr,
 			up: turnArr[0]

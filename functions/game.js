@@ -38,17 +38,17 @@ const heroTurn = channel => {
 		if (msg.content.toLowerCase() === 'skip') {
 			curMessage.edit({embed: {
 				author: {
-					name: `${hero.file.info.name}, Your turn was skipped.`,
+					name: `${hero.file.info.name}, your turn was skipped.`,
 					icon_url: hero.file.config.icon
 				},
 				color: 0xff3333,
 				description: 'Your turn has been skipped. Note that you _will still be attacked_.'
 			}});
-		} else hero.file.attack(channel, msg.content, curMessage);
+		} else hero.file.attack(channel, msg.content.toLowerCase(), curMessage);
 	}).catch(c => {
 		curMessage.edit({embed: {
 			author: {
-				name: `${hero.file.info.name}, Your turn was skipped.`,
+				name: `${hero.file.info.name}, your turn was skipped.`,
 				icon_url: hero.file.config.icon
 			},
 			color: 0xff3333,
